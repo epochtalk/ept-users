@@ -1,0 +1,18 @@
+{
+  "name": "ept-users",
+  "version": "0.0.1",
+  "description": "Default Epochtalk Users",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Edward Kim",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.3.1",
+    "boom": "^3.1.2",
+    "epochtalk-core-pg": "^0.10.0",
+    "joi": "^7.2.2",
+    "lodash": "^4.5.0"
+  }
+}
