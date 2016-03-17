@@ -1,6 +1,8 @@
 var common = {};
 module.exports = common;
 
+var cheerio = require('cheerio');
+
 function clean(sanitizer, payload) {
   var keys = ['username', 'email', 'name', 'website', 'btcAddress', 'gender', 'location', 'language', 'avatar', 'position'];
   keys.map(function(key) {
@@ -14,7 +16,21 @@ function clean(sanitizer, payload) {
 }
 
 function parse(parser, payload) {
-  payload.raw_signature = parser.parse(payload.raw_signature);
+  payload.signature = parser.parse(payload.raw_signature);
+}
+
+function imagesSignature(imageStore, payload) {
+  // remove images in signature
+  if (payload.signature) {
+    var $ = cheerio.load(payload.signature);
+    $('img').remove();
+    payload.signature = $.html();
+  }
+
+  // clear the expiration on user's avatar
+  if (payload.avatar) {
+    imageStore.clearExpiration(payload.avatar);
+  }
 }
 
 var formatUser = function(user) {
@@ -60,6 +76,11 @@ common.export = () =>  {
     {
       name: 'common.users.parse',
       method: parse,
+      options: { callback: false }
+    },
+    {
+      name: 'common.images.signature',
+      method: imagesSignature,
       options: { callback: false }
     }
   ];
