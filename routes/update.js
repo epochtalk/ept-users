@@ -76,20 +76,20 @@ module.exports = {
       payload: Joi.object().keys({
         email: Joi.string().email(),
         username: Joi.string().regex(/^[a-zA-Z\d-_.]+$/).min(3).max(255).required(),
-        old_password: Joi.string().min(8).max(72),
-        password: Joi.string().min(8).max(72),
+        old_password: Joi.string().min(8).max(255),
+        password: Joi.string().min(8).max(255),
         confirmation: Joi.ref('password'),
-        name: Joi.string().allow(''),
-        website: Joi.string().allow(''),
-        btcAddress: Joi.string().allow(''),
-        gender: Joi.string().allow(''),
+        name: Joi.string().max(255).allow(''),
+        website: Joi.string().uri({scheme: ['http', 'https']}).allow(''),
+        btcAddress: Joi.string().max(255).allow(''),
+        gender: Joi.string().max(255).allow(''),
         dob: Joi.date().allow(''),
-        location: Joi.string().allow(''),
-        language: Joi.string().allow(''),
-        position: Joi.string().allow(''),
-        raw_signature: Joi.string().allow(''),
-        signature: Joi.string().allow(''),
-        avatar: Joi.string().allow('')
+        location: Joi.string().max(255).allow(''),
+        language: Joi.string().max(255).allow(''),
+        position: Joi.string().max(255).allow(''),
+        raw_signature: Joi.string().max(5000).allow(''),
+        signature: Joi.string().max(5000).allow(''),
+        avatar: Joi.string().uri({scheme: ['http', 'https']}).allow('')
       })
       .and('old_password', 'password', 'confirmation')
       .with('signature', 'raw_signature')
