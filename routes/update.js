@@ -75,6 +75,7 @@ module.exports = {
       params: { id: Joi.string().required() },
       payload: Joi.object().keys({
         email: Joi.string().email(),
+        emailPassword: Joi.string().min(8).max(255),
         username: Joi.string().regex(/^[a-zA-Z\d-_.]+$/).min(3).max(255).required(),
         old_password: Joi.string().min(8).max(255),
         password: Joi.string().min(8).max(255),
@@ -91,11 +92,11 @@ module.exports = {
         signature: Joi.string().max(5000).allow(''),
         avatar: Joi.string().uri({scheme: ['http', 'https']}).allow('')
       })
-      .and('old_password', 'password', 'confirmation')
+      .and('password', 'old_password', 'confirmation')
       .with('signature', 'raw_signature')
+      .with('email', 'emailPassword')
     },
     pre: [
-      // TODO: password should be needed to update email
       { method: 'auth.users.update(server, auth, params.id, payload)' },
       { method: 'common.users.clean(sanitizer, payload)' },
       { method: 'common.users.parse(parser, payload)' },
@@ -113,6 +114,7 @@ module.exports = {
       delete user.old_password;
       delete user.password;
       delete user.confirmation;
+      delete user.emailPassword;
       return user;
     })
     .then(function(user) {

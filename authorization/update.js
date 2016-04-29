@@ -18,9 +18,10 @@ function sameUser(server, auth, paramsId, payload) {
   var allowed = isAllowed(server, auth);
   var active = isActive(server, auth.credentials.id);
   var emailUnique = isEmailUnique(server, paramsId, payload.email);
+  var emailPassValid = isPasswordValid(server, paramsId, payload.emailPassword);
   var usernameUnique = isUsernameUnique(server, paramsId, payload.username);
   var passValid = isPasswordValid(server, paramsId, payload.old_password);
-  return Promise.all([allowed, active, emailUnique, usernameUnique, passValid]);
+  return Promise.all([allowed, active, emailUnique, emailPassValid, usernameUnique, passValid]);
 }
 
 function otherUser(server, auth, paramsId, payload) {
@@ -72,6 +73,7 @@ function isEmailUnique(server, userId, email) {
 function isUsernameUnique(server, userId, username) {
   if (username) {
     return server.authorization.build({
+      error: Boom.badRequest(),
       type: 'isUnique',
       method: server.db.users.userByUsername,
       args: [querystring.unescape(username)],
@@ -82,13 +84,14 @@ function isUsernameUnique(server, userId, username) {
 }
 
 // old password valid
-function isPasswordValid(server, userId, old_password) {
-  if (old_password) {
+function isPasswordValid(server, userId, password) {
+  if (password) {
     return server.authorization.build({
+      error: Boom.badRequest(),
       type: 'validatePassword',
       server: server,
       userId: userId,
-      password: old_password
+      password: password
     });
   }
   else { return true; }
@@ -97,8 +100,8 @@ function isPasswordValid(server, userId, old_password) {
 // remove email from payload for other users
 function rejectEmail(payload) {
   if (payload.email) {
-    delete payload.email;
-    return true;
+    var error = Boom.badRequest('Not Allowed to change other user\'s email');
+    return Promise.reject(error);
   }
   else { return true; }
 }
