@@ -1,6 +1,7 @@
 var path = require('path');
 
 module.exports = {
+  testConnection: require(path.normalize(__dirname + '/db')).db.testConnection,
   searchUsernames: require(path.normalize(__dirname + '/searchUsernames')),
   page: require(path.normalize(__dirname + '/page.js')),
   count: require(path.normalize(__dirname + '/count.js')),
