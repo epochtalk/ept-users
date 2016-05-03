@@ -84,7 +84,7 @@ module.exports = {
         website: Joi.string().uri({scheme: ['http', 'https']}).allow(''),
         btcAddress: Joi.string().max(255).allow(''),
         gender: Joi.string().max(255).allow(''),
-        dob: Joi.date().allow('', null, undefined),
+        dob: Joi.date().allow('', null),
         location: Joi.string().max(255).allow(''),
         language: Joi.string().max(255).allow(''),
         position: Joi.string().max(255).allow(''),
