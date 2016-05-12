@@ -150,7 +150,21 @@ var moderator = {
   }
 };
 
+var patroller = {
+  update: { allow: true },
+  find: { allow: true },
+  deactivate: { allow: true },
+  reactivate: { allow: true }
+};
+
 var user = {
+  update: { allow: true },
+  find: { allow: true },
+  deactivate: { allow: true },
+  reactivate: { allow: true }
+};
+
+var newbie = {
   update: { allow: true },
   find: { allow: true },
   deactivate: { allow: true },
@@ -199,7 +213,9 @@ module.exports = {
     administrator: administrator,
     globalModerator: globalModerator,
     moderator: moderator,
+    patroller: patroller,
     user: user,
+    newbie: newbie,
     banned: banned,
     anonymous: anonymous,
     private: {}
