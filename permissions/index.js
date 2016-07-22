@@ -44,6 +44,9 @@ var validation =  Joi.object().keys({
       }).xor('admin', 'mod')
     })
   }),
+  pagePublic: Joi.object().keys({
+    allow: Joi.boolean()
+  })
 });
 
 var superAdministrator = {
@@ -69,7 +72,8 @@ var superAdministrator = {
   delete: {
     allow: true,
     bypass: { priority: { admin: true } }
-  }
+  },
+  pagePublic: { allow: true }
 };
 
 var administrator = {
@@ -95,7 +99,8 @@ var administrator = {
   delete: {
     allow: true,
     bypass: { priority: { admin: true } }
-  }
+  },
+  pagePublic: { allow: true }
 };
 
 var globalModerator = {
@@ -121,7 +126,8 @@ var globalModerator = {
   delete: {
     allow: true,
     bypass: { priority: { mod: true } }
-  }
+  },
+  pagePublic: { allow: true }
 };
 
 var moderator = {
@@ -147,32 +153,36 @@ var moderator = {
   delete: {
     allow: true,
     bypass: { priority: { mod: true } }
-  }
+  },
+  pagePublic: { allow: true }
 };
 
 var patroller = {
   update: { allow: true },
   find: { allow: true },
   deactivate: { allow: true },
-  reactivate: { allow: true }
+  reactivate: { allow: true },
+  pagePublic: { allow: true }
 };
 
 var user = {
   update: { allow: true },
   find: { allow: true },
   deactivate: { allow: true },
-  reactivate: { allow: true }
+  reactivate: { allow: true },
+  pagePublic: { allow: true }
 };
 
 var newbie = {
   update: { allow: true },
   find: { allow: true },
   deactivate: { allow: true },
-  reactivate: { allow: true }
+  reactivate: { allow: true },
+  pagePublic: { allow: true }
 };
 
 var banned = {
-  find: { allow: true }
+  find: { allow: true },
 };
 
 var anonymous = {
@@ -191,6 +201,7 @@ var layout = {
       { description: 'View Sensitive Information', control: 'viewMoreInfo', type: 'boolean'}
     ]
   },
+  pagePublic: { title: 'Search and Page forum members' },
   deactivate: {
     title: 'Deactivate User Accounts',
     bypasses: [ { description: 'Other Users', control: 'priority' } ]

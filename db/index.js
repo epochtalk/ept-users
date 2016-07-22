@@ -4,6 +4,7 @@ module.exports = {
   testConnection: require(path.normalize(__dirname + '/db')).db.testConnection,
   searchUsernames: require(path.normalize(__dirname + '/searchUsernames')),
   page: require(path.normalize(__dirname + '/page.js')),
+  pagePublic: require(path.normalize(__dirname + '/pagePublic.js')),
   count: require(path.normalize(__dirname + '/count.js')),
   userByEmail: require(path.normalize(__dirname + '/userByEmail.js')),
   userByUsername: require(path.normalize(__dirname + '/userByUsername.js')),
