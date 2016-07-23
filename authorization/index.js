@@ -12,6 +12,11 @@ module.exports = [
     options: { callback: false }
   },
   {
+    name: 'auth.users.pagePublic',
+    method: require(path.normalize(__dirname + '/pagePublic')),
+    options: { callback: false }
+  },
+  {
     name: 'auth.users.deactivate',
     method: require(path.normalize(__dirname + '/deactivate')),
     options: { callback: false }
