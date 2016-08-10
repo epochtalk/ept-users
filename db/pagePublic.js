@@ -30,7 +30,7 @@ module.exports = function(opts) {
     result.users = users;
     q = 'SELECT count(*) FROM users';
     if (opts && opts.searchStr) {
-      q += ' WHERE username LIKE $1';
+      q += ' WHERE u.deleted = false username LIKE $1';
       params = [opts.searchStr + '%'];
       return db.scalar(q, params);
     }
