@@ -57,7 +57,8 @@ module.exports = {
       favicon: config.website.favicon,
       websocket_host: config.websocket_client_host,
       websocket_port: config.websocket_port,
-      GAKey: config.gaKey
+      GAKey: config.gaKey,
+      currentYear: new Date().getFullYear()
     };
 
     // get user by username
