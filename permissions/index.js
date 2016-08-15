@@ -18,22 +18,10 @@ var validation =  Joi.object().keys({
     })
   }),
   deactivate: Joi.object().keys({
-    allow: Joi.boolean(),
-    bypass: Joi.object().keys({
-      priority: Joi.object().keys({
-        admin: Joi.boolean(),
-        mod: Joi.boolean()
-      }).xor('admin', 'mod')
-    })
+    allow: Joi.boolean()
   }),
   reactivate: Joi.object().keys({
-    allow: Joi.boolean(),
-    bypass: Joi.object().keys({
-      priority: Joi.object().keys({
-        admin: Joi.boolean(),
-        mod: Joi.boolean()
-      }).xor('admin', 'mod')
-    })
+    allow: Joi.boolean()
   }),
   delete: Joi.object().keys({
     allow: Joi.boolean(),
@@ -61,14 +49,8 @@ var superAdministrator = {
       viewMoreInfo: true
     }
   },
-  deactivate: {
-    allow: true,
-    bypass: { priority: { admin: true } }
-  },
-  reactivate: {
-    allow: true,
-    bypass: { priority: { admin: true } }
-  },
+  deactivate: { allow: true },
+  reactivate: { allow: true },
   delete: {
     allow: true,
     bypass: { priority: { admin: true } }
@@ -88,14 +70,8 @@ var administrator = {
       viewMoreInfo: true
     }
   },
-  deactivate: {
-    allow: true,
-    bypass: { priority: { admin: true } }
-  },
-  reactivate: {
-    allow: true,
-    bypass: { priority: { admin: true } }
-  },
+  deactivate: { allow: true },
+  reactivate: { allow: true },
   delete: {
     allow: true,
     bypass: { priority: { admin: true } }
@@ -115,14 +91,8 @@ var globalModerator = {
       viewMoreInfo: true
     }
   },
-  deactivate: {
-    allow: true,
-    bypass: { priority: { mod: true } }
-  },
-  reactivate: {
-    allow: true,
-    bypass: { priority: { mod: true } }
-  },
+  deactivate: { allow: true },
+  reactivate: { allow: true },
   delete: {
     allow: true,
     bypass: { priority: { mod: true } }
@@ -142,14 +112,8 @@ var moderator = {
       viewMoreInfo: true
     }
   },
-  deactivate: {
-    allow: true,
-    bypass: { priority: { mod: true } }
-  },
-  reactivate: {
-    allow: true,
-    bypass: { priority: { mod: true } }
-  },
+  deactivate: { allow: true },
+  reactivate: { allow: true },
   delete: {
     allow: true,
     bypass: { priority: { mod: true } }
@@ -203,12 +167,10 @@ var layout = {
   },
   pagePublic: { title: 'Search and Page forum members' },
   deactivate: {
-    title: 'Deactivate User Accounts',
-    bypasses: [ { description: 'Other Users', control: 'priority' } ]
+    title: 'Deactivate Their Account'
   },
   reactivate: {
-    title: 'Reactivate User Accounts',
-    bypasses: [ { description: 'Other Users', control: 'priority' } ]
+    title: 'Reactivate Their Account'
   },
   delete: {
     title: 'Delete User Accounts',
