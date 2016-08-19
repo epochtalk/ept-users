@@ -92,7 +92,8 @@ module.exports = {
 
       // Image
       if (viewable) {
-        data.ogImage = data.twImage = user.avatar;
+        data.twImage = user.avatar;
+        data.ogImages = [user.avatar];
       }
 
       return data;
