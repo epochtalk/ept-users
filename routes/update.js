@@ -101,6 +101,7 @@ module.exports = {
       { method: 'common.users.clean(sanitizer, payload)' },
       { method: 'common.users.parse(parser, payload)' },
       { method: 'common.images.signature(imageStore, payload)' },
+      { method: 'common.images.avatarSub(payload)' }
     ]
   },
   handler: function(request, reply) {
