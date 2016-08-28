@@ -1,6 +1,6 @@
 {
   "name": "ept-users",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Default Epochtalk Users",
   "main": "index.js",
   "scripts": {
