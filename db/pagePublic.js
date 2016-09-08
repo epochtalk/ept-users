@@ -28,9 +28,9 @@ module.exports = function(opts) {
   return db.sqlQuery(q, params)
   .then(function(users) {
     result.users = users;
-    q = 'SELECT count(*) FROM users';
+    q = 'SELECT count(*) FROM users u';
     if (opts && opts.searchStr) {
-      q += ' WHERE u.deleted = false username LIKE $1';
+      q += ' WHERE u.deleted = false AND u.username LIKE $1';
       params = [opts.searchStr + '%'];
       return db.scalar(q, params);
     }
