@@ -36,4 +36,24 @@ module.exports = [
     method: require(path.normalize(__dirname + '/delete')),
     options: { callback: false }
   },
+  {
+    name: 'auth.users.invitations',
+    method: require(path.normalize(__dirname + '/invitations')),
+    options: { callback: false }
+  },
+  {
+    name: 'auth.users.invite',
+    method: require(path.normalize(__dirname + '/invite')),
+    options: { callback: false }
+  },
+  {
+    name: 'auth.users.removeInvite',
+    method: require(path.normalize(__dirname + '/removeInvite')),
+    options: { callback: false }
+  },
+  {
+    name: 'auth.users.resend',
+    method: require(path.normalize(__dirname + '/resend')),
+    options: { callback: false }
+  }
 ];

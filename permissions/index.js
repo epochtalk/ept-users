@@ -34,6 +34,18 @@ var validation =  Joi.object().keys({
   }),
   pagePublic: Joi.object().keys({
     allow: Joi.boolean()
+  }),
+  invitations: Joi.object().keys({
+    allow: Joi.boolean()
+  }),
+  invite: Joi.object().keys({
+    allow: Joi.boolean()
+  }),
+  removeInvite: Joi.object().keys({
+    allow: Joi.boolean()
+  }),
+  resend: Joi.object().keys({
+    allow: Joi.boolean()
   })
 });
 
@@ -55,7 +67,11 @@ var superAdministrator = {
     allow: true,
     bypass: { priority: { admin: true } }
   },
-  pagePublic: { allow: true }
+  pagePublic: { allow: true },
+  invitations: { allow: true },
+  invite: { allow: true },
+  removeInvite: { allow: true },
+  resend: { allow: true }
 };
 
 var administrator = {
@@ -76,7 +92,11 @@ var administrator = {
     allow: true,
     bypass: { priority: { admin: true } }
   },
-  pagePublic: { allow: true }
+  pagePublic: { allow: true },
+  invitations: { allow: true },
+  invite: { allow: true },
+  removeInvite: { allow: true },
+  resend: { allow: true }
 };
 
 var globalModerator = {
@@ -97,7 +117,8 @@ var globalModerator = {
     allow: true,
     bypass: { priority: { mod: true } }
   },
-  pagePublic: { allow: true }
+  pagePublic: { allow: true },
+  invite: { allow: true },
 };
 
 var moderator = {
@@ -118,7 +139,8 @@ var moderator = {
     allow: true,
     bypass: { priority: { mod: true } }
   },
-  pagePublic: { allow: true }
+  pagePublic: { allow: true },
+  invite: { allow: true },
 };
 
 var patroller = {
@@ -166,16 +188,19 @@ var layout = {
     ]
   },
   pagePublic: { title: 'Search and Page forum members' },
-  deactivate: {
-    title: 'Deactivate Their Account'
-  },
-  reactivate: {
-    title: 'Reactivate Their Account'
-  },
+  deactivate: { title: 'Deactivate Their Account' },
+  reactivate: { title: 'Reactivate Their Account' },
   delete: {
     title: 'Delete User Accounts',
     bypasses: [ { description: 'Other Users', control: 'priority' } ]
-  }
+  },
+  inviteSeparator: { type: 'separator' },
+  inviteTitle: { title: 'Invitation Permissions', type: 'title' },
+  invite: { title: 'Invite User' },
+  invitations: { title: 'View all Invitations' },
+  resend: { title: 'Resend a prior invitation' },
+  removeInvite: { title: 'Remove an Invitation' },
+  moderationSepratator: { type: 'separator' }
 };
 
 module.exports = {

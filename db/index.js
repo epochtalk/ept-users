@@ -16,5 +16,11 @@ module.exports = {
   putUserThreadViews: require(path.normalize(__dirname + '/putUserThreadViews.js')),
   deactivate: require(path.normalize(__dirname + '/deactivate.js')),
   reactivate: require(path.normalize(__dirname + '/reactivate.js')),
-  delete: require(path.normalize(__dirname + '/delete.js'))
+  delete: require(path.normalize(__dirname + '/delete.js')),
+  findInvitation: require(path.normalize(__dirname + '/findInvitation')),
+  hasInvitation: require(path.normalize(__dirname + '/hasInvitation')),
+  invitations: require(path.normalize(__dirname + '/invitations')),
+  invite: require(path.normalize(__dirname + '/invite')),
+  removeInvite: require(path.normalize(__dirname + '/removeInvite')),
+  verifyInvite: require(path.normalize(__dirname + '/verifyInvite'))
 };
