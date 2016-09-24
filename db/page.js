@@ -7,10 +7,61 @@ var helper = dbc.helper;
 module.exports = function(opts) {
   var q;
   if (opts && opts.filter && opts.filter === 'banned') {
-    q = 'SELECT u.id, u.username, u.email, u.deleted, u.created_at, u.updated_at, u.imported_at, b.expiration as ban_expiration, ARRAY(SELECT ip.user_ip FROM users.ips ip WHERE u.id = ip.user_id) as user_ips FROM users u RIGHT JOIN (SELECT ub.expiration, ub.user_id FROM users.bans ub WHERE ub.expiration > now()) b ON (u.id = b.user_id)';
+    q = `
+      SELECT
+        u.id,
+        u.username,
+        u.email,
+        u.deleted,
+        u.created_at,
+        u.updated_at,
+        u.imported_at,
+        b.expiration as ban_expiration,
+        (
+          SELECT up.last_active
+          FROM users.profiles up
+          WHERE u.id = up.user_id
+        ),
+        ARRAY(
+          SELECT ip.user_ip
+          FROM users.ips ip
+          WHERE u.id = ip.user_id
+        ) as user_ips
+      FROM users u
+      RIGHT JOIN (
+        SELECT ub.expiration, ub.user_id
+        FROM users.bans ub
+        WHERE ub.expiration > now()
+      ) b ON (u.id = b.user_id)
+    `;
   }
   else {
-    q = 'SELECT u.id, u.username, u.email, u.deleted, u.created_at, u.updated_at, u.imported_at, (SELECT ub.expiration FROM users.bans ub WHERE ub.user_id = u.id AND ub.expiration > now()) as ban_expiration, ARRAY(SELECT ip.user_ip FROM users.ips ip WHERE u.id = ip.user_id) as user_ips FROM users u';
+    q = `
+      SELECT
+        u.id,
+        u.username,
+        u.email,
+        u.deleted,
+        u.created_at,
+        u.updated_at,
+        u.imported_at,
+        (
+          SELECT ub.expiration
+          FROM users.bans ub
+          WHERE ub.user_id = u.id AND ub.expiration > now()
+        ) as ban_expiration,
+        (
+          SELECT up.last_active
+          FROM users.profiles up
+          WHERE u.id = up.user_id
+        ),
+        ARRAY(
+          SELECT ip.user_ip
+          FROM users.ips ip
+          WHERE u.id = ip.user_id
+        ) as user_ips
+      FROM users u
+    `;
   }
 
   opts = opts || {};
