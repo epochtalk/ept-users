@@ -99,9 +99,7 @@ module.exports = {
 
       return data;
     })
-    .then(function(data) {
-      return reply.view('index', data);
-    })
-    .catch(function() { return reply(Boom.badRequest()); });
+    .then(function(data) { return reply.view('index', data); })
+    .catch(function() { return reply().redirect('/404'); });
   }
 };
