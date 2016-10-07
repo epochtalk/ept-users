@@ -39,9 +39,13 @@ module.exports = function(username) {
       p.raw_signature,
       p.fields,
       p.post_count,
-      p.last_active
+      p.last_active,
+      pr.posts_per_page,
+      pr.threads_per_page,
+      pr.collapsed_categories
     FROM users u
     LEFT JOIN users.profiles p ON u.id = p.user_id
+    LEFT JOIN users.preferences pr ON u.id = pr.user_id
     WHERE u.username = $1`;
   var params = [username];
   return db.sqlQuery(q, params)
@@ -61,6 +65,13 @@ module.exports = function(username) {
       .then(function(rows) { user.roles = rows; })
       .then(function() { return user; });
     }
+  })
+  .then(function(user) {
+    if (user.collapsed_categories) {
+      user.collapsed_categories = user.collapsed_categories.cats;
+    }
+    else { user.collapsed_categories = []; }
+    return user;
   })
   .then(helper.slugify);
 };

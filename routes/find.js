@@ -61,7 +61,17 @@ module.exports = {
       delete user.confirmation_token;
       delete user.reset_token;
       delete user.reset_expiration;
-      if (!adminView) { delete user.email; }
+      if (!adminView) {
+        delete user.email;
+        delete user.posts_per_page;
+        delete user.thread_per_page;
+        delete user.collapsed_categories;
+      }
+      else {
+        user.posts_per_page = user.posts_per_page || 25;
+        user.threads_per_page = user.threads_per_page || 25;
+        user.collapsed_categories = user.collapsed_categories || [];
+      }
       user.priority = _.min(user.roles.map(function(role) { return role.priority; }));
       user.roles = user.roles.map(function(role) { return role.lookup; });
       if (user.roles.length < 1) { user.roles.push('user'); }

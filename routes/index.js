@@ -11,5 +11,6 @@ module.exports = [
   require(path.normalize(__dirname + '/invitations')),
   require(path.normalize(__dirname + '/invite')),
   require(path.normalize(__dirname + '/removeInvitation')),
-  require(path.normalize(__dirname + '/resend'))
+  require(path.normalize(__dirname + '/resend')),
+  require(path.normalize(__dirname + '/preferences'))
 ];

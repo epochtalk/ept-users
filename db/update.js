@@ -72,7 +72,44 @@ module.exports = function(user) {
       if (exists) { return common.updateUserProfile(user, client); }
       else { return common.insertUserProfile(user, client); }
     })
+    // query for users.preferences row
+    .then(function() {
+      q = 'SELECT * FROM users.preferences WHERE user_id = $1 FOR UPDATE';
+      return client.queryAsync(q, [user.id])
+      .then(function(results) {
+        var exists = false;
+        if (results.rows.length) { exists = true; }
+        return exists;
+      });
+    })
+    // update or insert users.preferences row
+    .then(function(exists) {
+      var prefs = {
+        id: user.id,
+        posts_per_page: user.posts_per_page || 25,
+        threads_per_page: user.threads_per_page || 25
+      };
+      if (user.collapsed_categories) {
+        prefs.collapsed_categories = { cats: user.collapsed_categories };
+      }
+      else { prefs.collapsed_categories = { cats: [] }; }
+
+      if (exists) { return updateUserPreferences(prefs, client); }
+      else { return insertUserPreferences(prefs, client); }
+    })
     .then(function() { return common.formatUser(user); });
   })
   .then(helper.slugify);
 };
+
+function insertUserPreferences(user, client) {
+  var q = 'INSERT INTO users.preferences (user_id, posts_per_page, threads_per_page, collapsed_categories) VALUES ($1, $2, $3, $4)';
+  var params = [user.id, user.posts_per_page, user.threads_per_page, user.collapsed_categories];
+  return client.queryAsync(q, params);
+}
+
+function updateUserPreferences(user, client) {
+  var q = 'UPDATE users.preferences SET posts_per_page = $2, threads_per_page = $3, collapsed_categories = $4 WHERE user_id = $1';
+  var params = [user.id, user.posts_per_page, user.threads_per_page, user.collapsed_categories];
+  return client.queryAsync(q, params);
+}
