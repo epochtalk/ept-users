@@ -63,15 +63,15 @@ module.exports = function(username) {
         return roles.length ? roles : userRole;
       })
       .then(function(rows) { user.roles = rows; })
-      .then(function() { return user; });
+      .then(function() {
+        if (user.collapsed_categories) {
+          user.collapsed_categories = user.collapsed_categories.cats;
+        }
+        else { user.collapsed_categories = []; }
+        return user;
+      });
     }
-  })
-  .then(function(user) {
-    if (user.collapsed_categories) {
-      user.collapsed_categories = user.collapsed_categories.cats;
-    }
-    else { user.collapsed_categories = []; }
-    return user;
   })
   .then(helper.slugify);
 };
+
