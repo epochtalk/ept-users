@@ -1,8 +1,10 @@
 var path = require('path');
 
+var doinks = require(path.normalize(__dirname + '/db'));
+
 module.exports = {
-  testConnection: require(path.normalize(__dirname + '/db')).db.testConnection,
-  close: require(path.normalize(__dirname + '/db')).db.close,
+  testConnection: doinks.db.testConnection,
+  close: doinks.close,
   searchUsernames: require(path.normalize(__dirname + '/searchUsernames')),
   page: require(path.normalize(__dirname + '/page.js')),
   pagePublic: require(path.normalize(__dirname + '/pagePublic.js')),
